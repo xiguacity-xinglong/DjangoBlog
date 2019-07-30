@@ -1,0 +1,22 @@
+version: '3'
+services:
+        db:
+                image: mysql
+                restart: always
+                ports:
+                        - "3306:3306"
+                volumes:
+                        - /var/mydb:/var/lib/mysql:rw
+                environment:
+                        - MYSQL_DATABASE=djangoblog
+                        - MYSQL_ROOT_PASSWORD=123456
+        web:
+                build: .
+                command: python manage.py runserver 0.0.0.0:9000 --insecure
+                volumes:
+
+                        - .:/leartd
+                ports:
+                        - "8080:9000"
+                depends_on:
+                        - db
